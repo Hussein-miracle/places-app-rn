@@ -18,7 +18,7 @@ import NewPlaceScreen, {
   NewPlaceScreenOptions,
 } from "../screens/NewPlaceScreen";
 
-import MapScreen from "../screens/MapScreen";
+import MapScreen,{MapScreenOptions} from "../screens/MapScreen";
 
 import Colors from "../constants/Colors";
 import placesReducer from "../store/reducers/places.reducer";
@@ -64,7 +64,7 @@ const AppNavigator = () => {
               component={NewPlaceScreen}
               options={NewPlaceScreenOptions}
             />
-            <Stack.Screen name="Map" component={MapScreen} />
+            <Stack.Screen name="Map" component={MapScreen} options={MapScreenOptions}/>
           </Stack.Navigator>
         </Provider>
       </OverflowMenuProvider>

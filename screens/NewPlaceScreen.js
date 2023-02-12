@@ -10,6 +10,7 @@ import {
 } from "react-native";
 
 import ImagePicker from "../components/ImagePicker";
+import LocationPicker from "../components/LocationPicker";
 
 import * as placesActions from "../store/actions/places.actions";
 
@@ -37,6 +38,7 @@ const NewPlaceScreen = ({ navigation }) => {
     setSelectedImage(imagePath);
   }
 
+ 
   return (
     <ScrollView>
       <View style={{ ...styles.form }}>
@@ -48,6 +50,7 @@ const NewPlaceScreen = ({ navigation }) => {
         />
 
         <ImagePicker onImageTaken={onImageTaken}/>
+        <LocationPicker  navigation={navigation}/>
         <Button
           title="Save Place"
           color={Colors.primary}
@@ -79,7 +82,7 @@ const styles = StyleSheet.create({
     // backgroundColor:'deeppink',
   },
   label: {
-    marginBottom: 15,
+    marginBottom: 10,
     fontSize: 18,
   },
 });

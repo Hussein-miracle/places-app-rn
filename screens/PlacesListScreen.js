@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, StyleSheet, Text, Platform, FlatList } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import CHeaderButton from "../components/HeaderButton";
 import PlaceItem from "../components/PlaceItem";
 
 import Colors from "../constants/Colors";
+import { loadPlaces } from "../store/actions/places.actions";
 
 
 const PlacesListScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
   const places = useSelector((s) => s.places.places);
+
+  useEffect(() => {
+    dispatch(loadPlaces());
+  },[dispatch])
 
   if (places.length <= 0) {
     return (

@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   imgText: {
-    marginTop: "25%",
+    // marginTop: "25%",
   },
   btn: {
     marginVertical: 10,
