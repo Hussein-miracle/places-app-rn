@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 import * as Permissions from "expo-permissions";
 import * as Location from "expo-location";
 import {
@@ -14,9 +14,13 @@ import {
 import MapPreview from "./MapPreview";
 import Colors from "../constants/Colors";
 
-const LocationPicker = ({navigation}) => {
+const LocationPicker = ({navigation,route,onLocationPicked}) => {
   const [isFetching, setIsFetching] = useState(false);
   const [pickedLocation, setPickedLocation] = useState(null);
+  const mapPickedLocation = route.params;
+  console.log(mapPickedLocation , 'routes' );
+
+
 
   const verifyPermissions = async () => {
     const result = await Permissions.askAsync(Permissions.LOCATION_FOREGROUND);
@@ -47,9 +51,10 @@ const LocationPicker = ({navigation}) => {
       // console.log(location, "location dat");
       const { latitude, longitude } = location.coords;
       setPickedLocation({
-        lat: latitude,
-        lng: longitude,
+        latitude: latitude,
+        longitude: longitude,
       });
+      onLocationPicked({latitude,longitude});
     } catch (err) {
       Alert.alert(
         "Error Fetching Location!.",
@@ -61,6 +66,13 @@ const LocationPicker = ({navigation}) => {
     setIsFetching(false);
   };
 
+
+  useEffect(() => {
+    if(mapPickedLocation?.pickedLocation){
+      setPickedLocation(mapPickedLocation?.pickedLocation);
+      onLocationPicked(mapPickedLocation?.pickedLocation);
+    }
+  },[mapPickedLocation])
 
   const pickOnMapHandler = () => {
     navigation.navigate('Map');

@@ -1,9 +1,16 @@
-import React, { useState } from "react";
-import { Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useState, useCallback, useEffect } from "react";
+import {
+  Alert,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import Colors from "../constants/Colors";
 
-const MapScreen = () => {
+const MapScreen = ({ navigation }) => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const mapRegion = {
     latitude: 37.78,
@@ -14,13 +21,51 @@ const MapScreen = () => {
 
   const handlePressMap = (event) => {
     event.persist();
-    console.log(event, "eMap");
     const { latitude, longitude } = event.nativeEvent.coordinate;
     setSelectedLocation({
       latitude,
       longitude,
     });
   };
+
+  const savePickedLocation = useCallback(() => {
+    console.log("saving location...");
+    console.log(selectedLocation, "slE");
+    if (!selectedLocation) {
+      Alert.alert(
+        "No Location Selected",
+        "You have to select a location to save",
+        [{ text: "Okay" }]
+      );
+      return;
+    }
+
+    navigation.navigate("NewPlace", {
+      pickedLocation:selectedLocation,
+    });
+    // navigation.goBack();
+    console.log("location saved.");
+  }, [selectedLocation]);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <TouchableOpacity style={styles.headerBtn} onPress={savePickedLocation}>
+            <Text style={styles.headerBtnText}>Save</Text>
+          </TouchableOpacity>
+        );
+      },
+    });
+
+    // navigation.setParams({
+    //   saveLocation: savePickedLocation,
+    // });
+
+
+  }, [savePickedLocation]);
+
+
 
   let markerCoord;
   if (selectedLocation) {
@@ -37,15 +82,17 @@ const MapScreen = () => {
   );
 };
 
-export const MapScreenOptions = () => {
+export const MapScreenOptions = ({ navigation, route }) => {
+  // console.log(route, "rtotu");
+  // const { saveLocation } = route.params;
   return {
-    headerRight: () => {
-      return (
-        <TouchableOpacity style={styles.headerBtn}>
-          <Text style={styles.headerBtnText}>Save</Text>
-        </TouchableOpacity>
-      );
-    },
+    // headerRight: () => {
+    //   return (
+    //     <TouchableOpacity style={styles.headerBtn} onPress={saveLocation}>
+    //       <Text style={styles.headerBtnText}>Save</Text>
+    //     </TouchableOpacity>
+    //   );
+    // },
   };
 };
 
@@ -58,11 +105,15 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   headerBtn: {
-    marginHorizontal:20,
+    marginHorizontal: 20,
+    backgroundColor: "#212121",
+    paddingHorizontal: 4,
+    paddingVertical: 2,
+    borderRadius: 4,
   },
   headerBtnText: {
-    fontSize:16,
-    color: Platform.OS === 'android' ? '#fff' : Colors.primary
+    fontSize: 16,
+    color: Platform.OS === "android" ? "#fff" : Colors.primary,
   },
 });
 

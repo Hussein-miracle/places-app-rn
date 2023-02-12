@@ -46,7 +46,7 @@ const defaultHeaderOptions = {
 const AppNavigator = () => {
   return (
     <NavigationContainer>
-      <StatusBar style="light" backgroundColor="lightgreen" />
+      <StatusBar style="light" backgroundColor="#212121" />
       <OverflowMenuProvider>
         <Provider store={store}>
           <Stack.Navigator

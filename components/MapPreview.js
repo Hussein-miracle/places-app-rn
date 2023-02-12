@@ -6,7 +6,7 @@ import ENV from "../env";
 const MapPreview = ({ location, children, styl , onPressMap }) => {
   let imagePreviewUrl;
   if (location) {
-    const { lat, lng } = location;
+    const { latitude:lat, longitude:lng } = location;
     imagePreviewUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=14&size=400x200&maptype=roadmap
     markers=color:red%7Clabel:A%7C${lat},${lng}
     &key=${ENV.googleApiKey}`;

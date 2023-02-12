@@ -16,10 +16,12 @@ import * as placesActions from "../store/actions/places.actions";
 
 import Colors from "../constants/Colors";
 
-const NewPlaceScreen = ({ navigation }) => {
+const NewPlaceScreen = ({ navigation, route }) => {
+
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [selectedImage,setSelectedImage] = useState(null);
+  const [selectedLocation,setSelectedLocation] = useState(null);
 
   const handleTitleChange = (value) => {
     setTitle(value);
@@ -27,15 +29,19 @@ const NewPlaceScreen = ({ navigation }) => {
 
   const handleSavePlace = async () => {
 
-    dispatch(placesActions.addPlace({ title,image:selectedImage }));
+    dispatch(placesActions.addPlace({ title,image:selectedImage,lng:selectedLocation.longitude,lat:selectedLocation.latitude }));
 
     setTitle("");
-    
+        
     navigation.goBack();
   };
 
   const onImageTaken = (imagePath) => {
     setSelectedImage(imagePath);
+  }
+
+  const onLocationPicked = (location) => {
+    setSelectedLocation(location);
   }
 
  
@@ -50,7 +56,7 @@ const NewPlaceScreen = ({ navigation }) => {
         />
 
         <ImagePicker onImageTaken={onImageTaken}/>
-        <LocationPicker  navigation={navigation}/>
+        <LocationPicker  navigation={navigation} route={route} onLocationPicked={onLocationPicked}/>
         <Button
           title="Save Place"
           color={Colors.primary}
