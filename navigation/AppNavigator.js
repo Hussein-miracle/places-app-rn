@@ -12,7 +12,7 @@ import PlacesListScreen, {
   PlacesListScreenOptions,
 } from "../screens/PlacesListScreen";
 
-import PlaceDetailScreen from "../screens/PlaceDetailScreen";
+import PlaceDetailScreen,{PlaceDetailScreenOptions} from "../screens/PlaceDetailScreen";
 
 import NewPlaceScreen, {
   NewPlaceScreenOptions,
@@ -58,7 +58,7 @@ const AppNavigator = () => {
               component={PlacesListScreen}
               options={PlacesListScreenOptions}
             />
-            <Stack.Screen name="PlaceDetail" component={PlaceDetailScreen} />
+            <Stack.Screen name="PlaceDetail" component={PlaceDetailScreen} options={PlaceDetailScreenOptions}/>
             <Stack.Screen
               name="NewPlace"
               component={NewPlaceScreen}

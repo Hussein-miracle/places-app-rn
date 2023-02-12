@@ -1,5 +1,5 @@
 import { ADD_PLACE } from "../action-types/places.action-types";
-
+import Place from "../../models/place";
 const INITIAL_STATE = {
   places:[]
 }
@@ -8,8 +8,9 @@ const INITIAL_STATE = {
 const placesReducer = (state = INITIAL_STATE,action) => {
   switch(action.type){
     case ADD_PLACE:{
-      const {title} = action.payload;
-      const updatedPlaces = [...state.places,title];
+      const {id,title,image} = action.payload;
+      const place = new Place(id.toString(),title,image);
+      const updatedPlaces = [...state.places,place];
       return {
         places:updatedPlaces,
       }
